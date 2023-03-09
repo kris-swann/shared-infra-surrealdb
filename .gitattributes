@@ -1,0 +1,6 @@
+# Do not encrypt .gitattributes
+.gitattributes !filter !diff
+
+*.tfvars filter=git-crypt diff=git-crypt
+*.tfstate filter=git-crypt diff=git-crypt
+*.env filter=git-crypt diff=git-crypt
