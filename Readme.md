@@ -17,6 +17,7 @@ Make sure that you have exported the following before running any terraform comm
 export B2_APPLICATION_KEY_ID="<secret>"
 export B2_APPLICATION_KEY="<secret>"
 export FLY_API_TOKEN="<secret>"
+export SURREAL_DB_CONN="<secret>"
 export SURREAL_DB_USER="<secret>"
 export SURREAL_DB_PASS="<secret>"
 ```
@@ -46,11 +47,11 @@ file to docker hub so that terraform can use it. Steps to manually push a new ta
 
 ## How to: Connect a SurrealDB REPL to the remote db
 ```bash
-surreal sql --conn http://surrealdb.krisswann.com --user $SURREAL_DB_USER --pass $SURREAL_DB_PASS --pretty
+surreal sql --conn "$SURREAL_DB_CONN" --user $SURREAL_DB_USER --pass $SURREAL_DB_PASS --pretty
 ```
 
 
 ## Resources:
-- (Launch SurrealDB on Fly.io)[https://tutorials.surrealdb.com/community/launch-instance-on-flyio.html]
-- (Cronjob options for Fly.io)[https://community.fly.io/t/cron-jobs-scheduler-on-fly-io/7791]
-- (SurrealDB permissioning example)[https://gist.github.com/koakh/fbbc37cde630bedcf57acfd4d6a6956b]
+- [Launch SurrealDB on Fly.io](https://tutorials.surrealdb.com/community/launch-instance-on-flyio.html)
+- [Cronjob options for Fly.io](https://community.fly.io/t/cron-jobs-scheduler-on-fly-io/7791)
+- [SurrealDB permissioning example](https://gist.github.com/koakh/fbbc37cde630bedcf57acfd4d6a6956b)
