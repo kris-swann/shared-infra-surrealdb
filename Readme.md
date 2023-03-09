@@ -29,8 +29,8 @@ terraform apply
 ```
 
 ## Validating certificates
-NOTE: It is expected that you manually validate certificates. This should just be a matter of
-adding CNAME, A, and AAAA records to the DNS.
+You'll have to manually validate the certificates. This should just be a matter of going to the
+fly.io app certificates page, and adding CNAME, A, and AAAA records to the DNS.
 
 ## How to: Upload to docker hub
 We have some slight modifications that we made to the default surrealdb dockerfile, we upload this
