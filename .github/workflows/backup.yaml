@@ -1,0 +1,36 @@
+name: Backup
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'  # every day at midnight
+
+jobs:
+  backup-surrealdb:
+    name: Backup SurrealDB
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set current date as env variable
+        run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+      - name: Install surrealdb cli
+        run: curl -sSf https://install.surrealdb.com | sh
+      - name: Install b2 cli
+        uses: sylwit/install-b2-cli-action@v1.0.1
+        with:
+          version: v3.0.1
+        env:
+          B2_APPLICATION_KEY_ID: ${{ secrets.B2_APPLICATION_KEY_ID }}
+          B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
+      - name: Generate backup for (NS=prod, DB=prod)
+        run: |
+          surreal export --ns prod --db prod \
+            --conn ${{ secrets.SURREAL_DB_CONN }} \
+            --user ${{ secrets.SURREAL_DB_USER }} \
+            --pass ${{ secrets.SURREAL_DB_PASS }} \
+            backup-ns-prod-db-prod.sql
+      - name: Upload backup for (NS=prod, DB=prod)
+        run: |
+          SHA1=$(sha1sum "backup-ns-prod-db-prod.sql" | cut -d ' ' -f 1)
+          LOCAL_FILE="backup-ns-prod-db-prod.sql"
+          B2_FILE="backup/ns=prod/db=prod/$NOW.sql"
+          b2 upload-file "${{ secrets.B2_BUCKET }}" "$LOCAL_FILE" "$B2_FILE" --sha1 "${SHA1}"
