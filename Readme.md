@@ -47,7 +47,7 @@ file to docker hub so that terraform can use it. Steps to manually push a new ta
 
 ## How to: Connect a SurrealDB REPL to the remote db
 ```bash
-surreal sql --conn "$SURREAL_DB_CONN" --user $SURREAL_DB_USER --pass $SURREAL_DB_PASS --pretty
+surreal sql --conn "$SURREAL_DB_CONN" --user "$SURREAL_DB_USER" --pass "$SURREAL_DB_PASS" --pretty
 ```
 
 
