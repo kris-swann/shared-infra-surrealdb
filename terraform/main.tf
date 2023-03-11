@@ -34,10 +34,10 @@ resource "fly_volume" "surrealdb_volume" {
 }
 
 resource "fly_machine" "surrealdb_machine" {
-  app      = fly_app.surrealdb_app.name
-  region   = var.fly_region
-  name     = "${var.fly_app_name}-${var.fly_region}"
-  image    = "krisswann/surrealdb:1.0.0-beta.8-v0"
+  app    = fly_app.surrealdb_app.name
+  region = var.fly_region
+  name   = "${var.fly_app_name}-${var.fly_region}"
+  image  = "krisswann/surrealdb:1.0.0-beta.8-v0"
   mounts = [
     {
       path   = "/data"
