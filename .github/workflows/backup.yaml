@@ -23,14 +23,16 @@ jobs:
           B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
       - name: Generate backup for (NS=prod, DB=prod)
         run: |
+          # Output stderr to stdout and stdout to /dev/null to avoid data leaks
           surreal export --ns prod --db prod \
             --conn ${{ secrets.SURREAL_DB_CONN }} \
             --user ${{ secrets.SURREAL_DB_USER }} \
             --pass ${{ secrets.SURREAL_DB_PASS }} \
-            backup-ns-prod-db-prod.sql
+            backup-ns-prod-db-prod.sql 2>&1 1>/dev/null
       - name: Upload backup for (NS=prod, DB=prod)
         run: |
           SHA1=$(sha1sum "backup-ns-prod-db-prod.sql" | cut -d ' ' -f 1)
           LOCAL_FILE="backup-ns-prod-db-prod.sql"
-          B2_FILE="backup/ns=prod/db=prod/$NOW.sql"
-          b2 upload-file "${{ secrets.B2_BUCKET }}" "$LOCAL_FILE" "$B2_FILE" --sha1 "${SHA1}"
+          B2_FILE="backup/$NOW/ns=prod/db=prod/backup.sql"
+          # Filter out any lines with an id to avoid data leaks
+          b2 upload-file "${{ secrets.B2_BUCKET }}" "$LOCAL_FILE" "$B2_FILE" --sha1 "${SHA1}" | sed -e 's/.*id.*/REDACTED/I'
