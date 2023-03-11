@@ -1,29 +1,34 @@
 variable "backup_bucket_name" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "fly_org_name" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "fly_app_name" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "fly_region" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "hostname" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "root_username" {
-  type   = string
+  type      = string
   sensitive = true
 }
 
 variable "root_password" {
-  type   = string
+  type      = string
   sensitive = true
 }
