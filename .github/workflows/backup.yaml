@@ -17,7 +17,7 @@ jobs:
       - name: Install b2 cli
         uses: sylwit/install-b2-cli-action@v1.0.1
         with:
-          version: v3.0.1
+          version: 3.7.1
         env:
           B2_APPLICATION_KEY_ID: ${{ secrets.B2_APPLICATION_KEY_ID }}
           B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
