@@ -23,12 +23,11 @@ jobs:
           B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
       - name: Generate backup for (NS=prod, DB=prod)
         run: |
-          # Output stderr to stdout and stdout to /dev/null to avoid data leaks
           surreal export --ns prod --db prod \
             --conn ${{ secrets.SURREAL_DB_CONN }} \
             --user ${{ secrets.SURREAL_DB_USER }} \
             --pass ${{ secrets.SURREAL_DB_PASS }} \
-            backup-ns-prod-db-prod.sql 2>&1 1>/dev/null
+            backup-ns-prod-db-prod.sql
       - name: Upload backup for (NS=prod, DB=prod)
         run: |
           SHA1=$(sha1sum "backup-ns-prod-db-prod.sql" | cut -d ' ' -f 1)
